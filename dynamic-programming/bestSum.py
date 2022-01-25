@@ -53,7 +53,7 @@ if __name__ == "__main__":
     print(bestSum_bruteForce(7, [5, 3, 4, 7]))
     print(bestSum_bruteForce(8, [2, 3, 5]))
     print(bestSum_bruteForce(8, [1, 4, 5])) 
-    #print(bestSum_bruteForce(100, [1, 2, 5, 25])) # Takes too long.
+    print(bestSum_bruteForce(11, [1, 2, 5])) # Takes too long.
 
     print(bestSum_dp(7, [5, 3, 4, 7]))
     print(bestSum_dp(8, [2, 3, 5]))
