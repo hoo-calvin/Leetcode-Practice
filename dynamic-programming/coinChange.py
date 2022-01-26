@@ -15,34 +15,55 @@ Output: -1
 Input: coins = [1], amount = 0
 Output: 0
 """
-def generateCoins(coins, amount, memo={}):
-    if amount in memo: return memo[amount]
-    if amount == 0: return []
-    if amount < 0: return None
 
-    smallestComb = None
+# def generateCoins(coins, amount, memo={}):
+#     if amount in memo: return memo[amount]
+#     if amount == 0: return []
+#     if amount < 0: return None
+
+#     smallestComb = None
     
-    for coin in coins:
-        remaining = amount - coin
-        result = generateCoins(coins, remaining, memo)
-        if result is not None:
-            newComb = result[:] + [coin]
-            if smallestComb is None or len(smallestComb) > len(newComb):
-                smallestComb = newComb
+#     for coin in coins:
+#         remaining = amount - coin
+#         result = generateCoins(coins, remaining, memo)
+#         if result is not None:
+#             newComb = result[:] + [coin]
+#             if smallestComb is None or len(smallestComb) > len(newComb):
+#                 smallestComb = newComb
     
-    memo[amount] = smallestComb
-    return memo[amount]
+#     memo[amount] = smallestComb
+#     return memo[amount]
+
+# def coinChange(coins, amount):
+    
+#     if amount == 0: return 0
+
+#     result = generateCoins(coins, amount)
+#     print(result)
+#     if sum(result) != amount:
+#         return -1
+#     else:
+#         return len(result)
 
 def coinChange(coins, amount):
     
     if amount == 0: return 0
+    
+    def helper(coins, amount):
+        if amount == 0: return 1
+        if amount < 0: return 0
 
-    result = generateCoins(coins, amount)
-    print(result)
-    if sum(result) != amount:
-        return -1
-    else:
-        return len(result)
+        totalWays = 0
+
+        for coin in coins:
+            remainder = amount-coin
+            if remainder >= 0:
+                totalWays += helper(coins, amount)
+
+        return totalWays
+
+    return helper(coins, amount)            
+
 
 if __name__ == '__main__':
     print(coinChange([1, 2, 5], 11))
