@@ -16,53 +16,28 @@ Input: coins = [1], amount = 0
 Output: 0
 """
 
-# def generateCoins(coins, amount, memo={}):
-#     if amount in memo: return memo[amount]
-#     if amount == 0: return []
-#     if amount < 0: return None
-
-#     smallestComb = None
-    
-#     for coin in coins:
-#         remaining = amount - coin
-#         result = generateCoins(coins, remaining, memo)
-#         if result is not None:
-#             newComb = result[:] + [coin]
-#             if smallestComb is None or len(smallestComb) > len(newComb):
-#                 smallestComb = newComb
-    
-#     memo[amount] = smallestComb
-#     return memo[amount]
-
-# def coinChange(coins, amount):
-    
-#     if amount == 0: return 0
-
-#     result = generateCoins(coins, amount)
-#     print(result)
-#     if sum(result) != amount:
-#         return -1
-#     else:
-#         return len(result)
-
 def coinChange(coins, amount):
-    
-    if amount == 0: return 0
-    
-    def helper(coins, amount):
-        if amount == 0: return 1
-        if amount < 0: return 0
-
-        totalWays = 0
-
+    # Edge cases
+    if amount == 0 : return 0
+    if len(coins) == 0: return 0
+    # Create memo with amount+1 (we choose amt+1 cause it is not possible to reach this large 
+    # number and we need to use min.)
+    memo = [amount+1 for _ in range(amount + 1)]
+    # Initialize 0 for 0.
+    memo[0] = 0
+    # Iterate through each index. Each index corresponds to each subvalue of amount.
+    for index in range(1, amount + 1):
+        # Go through each coin.
         for coin in coins:
-            remainder = amount-coin
-            if remainder >= 0:
-                totalWays += helper(coins, amount)
-
-        return totalWays
-
-    return helper(coins, amount)            
+            # Check if the math is valid.
+            if index - coin >= 0:
+                # The compare with mins with each coin calculation and adding a new coin from the prev possible.
+                memo[index] = min(memo[index], 1 + memo[index-coin])
+    # IF amount+1 is at the end. It wasnt possible to reach this value with the coins.
+    if memo[amount] == amount+1:
+        return -1
+    else:
+        return memo[amount]
 
 
 if __name__ == '__main__':
