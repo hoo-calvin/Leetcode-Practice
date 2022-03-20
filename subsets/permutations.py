@@ -23,13 +23,17 @@ def find_permutations(nums):
             # Third loop adds the current number to each index of each permutation.
             oldPerm = permutations.popleft()
             for j in range(len(oldPerm) + 1):
+                # Copy the current perm
                 newPerm = oldPerm[::]
+                # Add the new number to specific index
                 newPerm.insert(j, currNum)
+                # Append to permutation if len is same as original str.
                 if len(newPerm) == numsLength: 
                     results.append(newPerm)
+                # Add back to permutations array if not complete.
                 else:
                     permutations.append(newPerm)
-
+    # Return the results.
     return results
 
 test = [1, 3, 5]
