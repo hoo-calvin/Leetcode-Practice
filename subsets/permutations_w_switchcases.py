@@ -18,6 +18,7 @@ def find_perms(word):
     for i in range(len(word)):
         # If current index is a character. Numbers can be skipped.
         if word[i].isalpha():
+            # For each of the current permutations we change the cases of curr char.
             n = len(permutations)
             for j in range(n):
                 chars = list(permutations[j])
